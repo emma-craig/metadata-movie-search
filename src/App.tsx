@@ -2,6 +2,8 @@ import { Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
 import Home from './components/Home';
 import Movie from './components/Movie';
+import React from 'react';
+
 
 const App = () => {
   return (
