@@ -1,25 +1,33 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
-import Home from './components/Home';
-import Movie from './components/Movie';
-import React from 'react';
-import {Stack} from '@mui/material'
+import Movie from './components/Movies';
+import React, { useEffect } from 'react';
+import { Stack } from '@mui/material';
+import { useAppDispatch } from './hooks/hooks';
+import { listMovies } from './slices/movieSlice';
+import Movies from './components/Movies';
 
 const App = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(listMovies());
+  }, [dispatch]);
   return (
     <Stack>
       <Router>
-      <Header />
-      <Routes>
-        <Route
-          path="/"
-          element={<Home />}
-        />
-        <Route
-          path="/movie/:movieId"
-          element={<Movie />}
-        />
-      </Routes></Router>
+        <Header />
+        <Routes>
+          <Route
+            path="/"
+            element={<Movies />}
+          />
+          <Route
+            path="/movie/:movieId"
+            element={<Movie />}
+          />
+        </Routes>
+      </Router>
     </Stack>
   );
 };

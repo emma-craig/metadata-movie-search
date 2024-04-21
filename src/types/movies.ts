@@ -1,6 +1,6 @@
-export interface Movie {
-    imdbID: string;
-    title: string;
-    poster: string;
-    isFavourite: boolean;
+export interface IMovie {
+  imdbID: string;
+  Title: string;
+  Poster: string;
+  isFavourite: boolean;
 }
