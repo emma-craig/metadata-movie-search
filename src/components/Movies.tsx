@@ -9,7 +9,7 @@ const Movies = () => {
 
   return <Box>
     {movies && movies.map((mov: IMovie, index: number) => (
-      <Card>
+      <Card key={index}>
         <CardMedia
         component="img"
         alt={`${mov.Title}`}

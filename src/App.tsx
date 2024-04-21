@@ -11,7 +11,7 @@ const App = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(listMovies());
+    dispatch(listMovies('batman'));
   }, [dispatch]);
   return (
     <Stack>

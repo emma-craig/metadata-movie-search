@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IMovie } from '../types/movies';
-import { getMovies } from '../services/getMovies';
 import { RootState } from '../config/store';
 
 export interface MovieState {
@@ -19,8 +18,10 @@ export const initialState: MovieState = {
 
 export const listMovies: any = createAsyncThunk(
   'movies/listMovies',
-  async () => {
-    const response = await getMovies();
+
+  async (searchTerm) => {
+    const BASE_URL = `http://www.omdbapi.com/?apikey=${process.env.REACT_APP_MOVIE_API_KEY}`;
+    const response = await fetch(`${BASE_URL}&s=${searchTerm}`);
     const data = await response.json();
     return data.Search;
   }
