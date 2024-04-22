@@ -4,4 +4,5 @@ export interface IMovie {
   Poster: string;
   isFavourite: boolean;
   Type: string
+  Year: string
 }
