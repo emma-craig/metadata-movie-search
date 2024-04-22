@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from 'react';
 import { listMovies } from '../slices/movieSlice';
-import { IconButton, TextField } from '@mui/material';
+import { IconButton, Stack, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useAppDispatch } from '../hooks/hooks';
 const Header = () => {
@@ -12,14 +12,15 @@ const Header = () => {
     if (searchTerm === '') return alert('Please enter search term!');
 
     dispatch(listMovies(searchTerm));
-    setSearchTerm('');
   };
-  return (
+  return (<Stack alignItems='center' >
     <form onSubmit={handleSubmit}>
+      <Stack flexDirection='row'>
       <TextField
         id="search-bar"
         className="text"
         label="Enter a movie or series"
+        fullWidth
         variant="outlined"
         placeholder="Search..."
         value={searchTerm}
@@ -30,8 +31,8 @@ const Header = () => {
         type="submit"
         aria-label="search">
         <SearchIcon style={{ fill: 'blue' }} />
-      </IconButton>
-    </form>
+      </IconButton></Stack>
+    </form></Stack>
   );
 };
 

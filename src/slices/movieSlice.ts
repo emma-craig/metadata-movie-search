@@ -6,7 +6,7 @@ export interface MovieState {
   status: 'loading' | 'idle';
   error: string | null;
   data: Array<IMovie>;
-  favourites: Array<IMovie>;
+  favourites: Array<string>;
 }
 
 export const initialState: MovieState = {
@@ -30,7 +30,13 @@ export const listMovies: any = createAsyncThunk(
 const movieSlice = createSlice({
   name: 'movies',
   initialState,
-  reducers: {},
+  reducers: {
+    addFavourite(state, action) {
+    state.favourites = [...state.favourites, action.payload]
+  },
+  removeFavourite(state, action) {
+    state.favourites = state.favourites.filter(id => id !== action.payload)
+  }},
   extraReducers: (builder) => {
     builder.addCase(listMovies.pending, (state) => {
       state.status = 'loading';
@@ -52,5 +58,6 @@ const movieSlice = createSlice({
 });
 
 export const selectMovies = (state: RootState) => state.data;
-
+export const selectFavourites = (state: RootState) => state.favourites
+export const {addFavourite, removeFavourite} = movieSlice.actions
 export default movieSlice.reducer;

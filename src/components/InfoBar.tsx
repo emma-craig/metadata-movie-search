@@ -1,36 +1,31 @@
-import React, { useMemo, useState } from 'react';
-
-import MovieList from './MovieList';
 import {
-  SelectChangeEvent,
-  Stack,
   FormControl,
   InputLabel,
-  Select,
   MenuItem,
-  Typography,
+  Select,
+  SelectChangeEvent,
+  Stack,
 } from '@mui/material';
+import React, { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectFavourites, selectMovies } from '../slices/movieSlice';
 
-const Movies = () => {
+const InfoBar = () => {
   const favourites = useSelector(selectFavourites);
   const movies = useSelector(selectMovies);
   const [type, setType] = useState('movie');
   const handleChange = (e: SelectChangeEvent) => setType(e.target.value);
-  const filteredMovies = useMemo(
-    () => movies.filter((mov) => mov.Type === type),
-    [movies, type]
-  );
+  const filteredMovies = useMemo(() => {
+    return movies.filter((mov) => mov.Type === type);
+  }, [movies, type]);
   return (
-    <>{movies && (
+    <>
+      {movies && (
         <Stack
-        my={4}
           gap={1}
           flexDirection="row"
           justifyContent="space-between">
           <Stack>Number of favourites: {favourites.length}</Stack>
-          <Stack alignItems='flex-end'>
           <FormControl>
             <InputLabel id="demo-simple-select-label">
               Filter by type
@@ -40,18 +35,16 @@ const Movies = () => {
               id="format-filter-select"
               value={type}
               label="Type"
-              sx={{width:'300px'}}
               onChange={handleChange}>
               <MenuItem value="movie">Movie</MenuItem>
               <MenuItem value="series">Series</MenuItem>
             </Select>
           </FormControl>
-         <Typography variant='caption'> {type} count: {filteredMovies.length}</Typography></Stack>
+          {type}: {filteredMovies.length}
         </Stack>
       )}
-      <MovieList movies={filteredMovies} />
     </>
   );
 };
 
-export default Movies;
+export default InfoBar;
