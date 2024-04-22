@@ -32,11 +32,12 @@ const movieSlice = createSlice({
   initialState,
   reducers: {
     addFavourite(state, action) {
-    state.favourites = [...state.favourites, action.payload]
+      state.favourites = [...state.favourites, action.payload];
+    },
+    removeFavourite(state, action) {
+      state.favourites = state.favourites.filter((id) => id !== action.payload);
+    },
   },
-  removeFavourite(state, action) {
-    state.favourites = state.favourites.filter(id => id !== action.payload)
-  }},
   extraReducers: (builder) => {
     builder.addCase(listMovies.pending, (state) => {
       state.status = 'loading';
@@ -45,7 +46,7 @@ const movieSlice = createSlice({
     builder.addCase(
       listMovies.fulfilled,
       (state, action: PayloadAction<Array<IMovie>>) => {
-        state.data = action.payload;
+        state.data = action.payload || [];
         state.status = 'idle';
       }
     );
@@ -58,6 +59,6 @@ const movieSlice = createSlice({
 });
 
 export const selectMovies = (state: RootState) => state.data;
-export const selectFavourites = (state: RootState) => state.favourites
-export const {addFavourite, removeFavourite} = movieSlice.actions
+export const selectFavourites = (state: RootState) => state.favourites;
+export const { addFavourite, removeFavourite } = movieSlice.actions;
 export default movieSlice.reducer;

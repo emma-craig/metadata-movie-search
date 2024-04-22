@@ -54,7 +54,9 @@ const MovieList = ({ movies }: { movies: IMovie[] }) => {
       <Grid
         container
         spacing={2}>
-        {movies &&
+        {movies && movies.length === 0 ? (
+          <Typography>nothing to show</Typography>
+        ) : (
           movies.map((mov: IMovie, index: number) => {
             const isFavourite = favourites.includes(mov.imdbID);
 
@@ -89,7 +91,8 @@ const MovieList = ({ movies }: { movies: IMovie[] }) => {
                 </CardActions>
               </Card>
             );
-          })}
+          })
+        )}
       </Grid>
     </>
   );

@@ -3,6 +3,6 @@ export interface IMovie {
   Title: string;
   Poster: string;
   isFavourite: boolean;
-  Type: string
-  Year: string
+  Type: string;
+  Year: string;
 }
