@@ -5,14 +5,14 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useAppDispatch } from '../hooks/hooks';
 const Header = () => {
   const dispatch = useAppDispatch();
-
   const [searchTerm, setSearchTerm] = useState<string>('');
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (searchTerm === '') return alert('Please enter search term!');
-
     dispatch(listMovies(searchTerm));
   };
+  
   return (
     <Stack alignItems="center">
       <form onSubmit={handleSubmit}>

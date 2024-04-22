@@ -10,14 +10,13 @@ import {
   MenuItem,
   Typography,
   Button,
+  Dialog,
 } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { selectFavourites, selectMovies } from '../slices/movieSlice';
-import { useNavigate } from 'react-router-dom';
+import FavouritesList from './FavouritesList';
 
 const Movies = () => {
-  const navigate = useNavigate();
-
   const favourites = useSelector(selectFavourites);
   const movies = useSelector(selectMovies);
   const [type, setType] = useState('movie');
@@ -26,44 +25,55 @@ const Movies = () => {
     () => movies.filter((mov) => mov.Type === type),
     [movies, type]
   );
-  const showFavouriteMoviesList = () => {
-    navigate('./favourites');
+
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const handleShowModal = () => {
+    setIsVisible(true);
   };
+  const handleCloseModal = () => setIsVisible(false);
 
   return (
     <>
       {movies && (
-        <Stack
-          my={4}
-          gap={1}
-          flexDirection="row"
-          justifyContent="space-between">
-          <Stack>
-            <Typography>Number of favourites: {favourites.length}</Typography>
-            <Button onClick={showFavouriteMoviesList}>View Favourites</Button>
+        <>
+          <Dialog
+            open={isVisible}
+            onClose={handleCloseModal}
+            >
+            <FavouritesList />
+          </Dialog>
+          <Stack
+            my={4}
+            gap={1}
+            flexDirection="row"
+            justifyContent="space-between">
+            <Stack>
+              <Typography>Number of favourites: {favourites.length}</Typography>
+              <Button onClick={handleShowModal}>View Favourites</Button>
+            </Stack>
+            <Stack alignItems="flex-end">
+              <FormControl>
+                <InputLabel id="demo-simple-select-label">
+                  Filter by type
+                </InputLabel>
+                <Select
+                  labelId="filter-by-format-label"
+                  id="format-filter-select"
+                  value={type}
+                  label="Type"
+                  sx={{ width: '300px' }}
+                  onChange={handleChange}>
+                  <MenuItem value="movie">Movie</MenuItem>
+                  <MenuItem value="series">Series</MenuItem>
+                </Select>
+              </FormControl>
+              <Typography variant="caption">
+                {' '}
+                {type} count: {filteredMovies.length}
+              </Typography>
+            </Stack>
           </Stack>
-          <Stack alignItems="flex-end">
-            <FormControl>
-              <InputLabel id="demo-simple-select-label">
-                Filter by type
-              </InputLabel>
-              <Select
-                labelId="filter-by-format-label"
-                id="format-filter-select"
-                value={type}
-                label="Type"
-                sx={{ width: '300px' }}
-                onChange={handleChange}>
-                <MenuItem value="movie">Movie</MenuItem>
-                <MenuItem value="series">Series</MenuItem>
-              </Select>
-            </FormControl>
-            <Typography variant="caption">
-              {' '}
-              {type} count: {filteredMovies.length}
-            </Typography>
-          </Stack>
-        </Stack>
+        </>
       )}
       <MovieList movies={filteredMovies} />
     </>

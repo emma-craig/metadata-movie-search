@@ -1,17 +1,5 @@
-import {
-  Card,
-  CardMedia,
-  CardHeader,
-  CardActions,
-  Grid,
-  Dialog,
-  Stack,
-  Typography,
-  IconButton,
-  Tooltip,
-} from '@mui/material';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { Grid, Dialog, Stack, Typography } from '@mui/material';
+
 import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import {
@@ -20,12 +8,13 @@ import {
   selectFavourites,
 } from '../slices/movieSlice';
 import { IMovie } from '../types/movies';
+import MovieCard from './MovieCard';
 
 const MovieList = ({ movies }: { movies: IMovie[] }) => {
   const dispatch = useAppDispatch();
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [selectedMovie, setSelectedMovie] = useState<IMovie | null>(null);
-  const handleShowModal = (mov: any) => {
+  const handleShowModal = (mov: IMovie) => {
     setSelectedMovie(mov);
     setIsVisible(true);
   };
@@ -59,37 +48,14 @@ const MovieList = ({ movies }: { movies: IMovie[] }) => {
         ) : (
           movies.map((mov: IMovie, index: number) => {
             const isFavourite = favourites.includes(mov.imdbID);
-
             return (
-              <Card
-                key={index}
-                sx={{ m: 2, width: '300px' }}>
-                <CardMedia
-                  component="img"
-                  alt={`${mov.Title}`}
-                  height="200px"
-                  image={mov.Poster}
-                  onClick={() => {
-                    handleShowModal(mov);
-                  }}
-                />
-                <CardHeader title={mov.Title} />
-                <CardActions>
-                  <Tooltip
-                    title={
-                      isFavourite
-                        ? 'remove from favourites'
-                        : 'add to favourites'
-                    }>
-                    <IconButton
-                      onClick={() =>
-                        handleToggleFavourite(isFavourite, mov.imdbID)
-                      }>
-                      {isFavourite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-                    </IconButton>
-                  </Tooltip>
-                </CardActions>
-              </Card>
+              <MovieCard
+                handleToggleFavourite={handleToggleFavourite}
+                handleShowModal={handleShowModal}
+                mov={mov}
+                isFavourite={isFavourite}
+                index={index}
+              />
             );
           })
         )}

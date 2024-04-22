@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
+import Movie from './components/Movies';
 import React, { useEffect } from 'react';
 import { Stack } from '@mui/material';
 import { useAppDispatch } from './hooks/hooks';
 import { listMovies } from './slices/movieSlice';
 import Movies from './components/Movies';
-import FavouritesList from './components/FavouritesList';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -23,8 +23,8 @@ const App = () => {
             element={<Movies />}
           />
           <Route
-            path="/favourites"
-            element={<FavouritesList />}
+            path="/movie/:movieId"
+            element={<Movie />}
           />
         </Routes>
       </Router>
