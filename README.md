@@ -4,8 +4,9 @@ This project contain a movie search app with search, filter, sort, toggle favour
 # How to use? 🔮
 You have to clone or download the project from GitHub https://github.com/emma-craig/metadata-movie-search
 Go to project directory cd ../metadata-movie-search
-yarn install
-yarn start
+
+- yarn install
+- yarn start
 
 # To run unit tests
-yarn test
+- yarn test
