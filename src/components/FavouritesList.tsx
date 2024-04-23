@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { useAppSelector } from '../hooks/hooks';
 import { selectFavourites, selectMovies } from '../slices/movieSlice';
 import { List, ListItem, Stack } from '@mui/material';
+import EmptyState from './EmptyState';
 
 const FavouritesList = () => {
   const movies = useAppSelector(selectMovies);
@@ -12,7 +13,9 @@ const FavouritesList = () => {
   );
   return (
     <Stack p={8}>
-      {favouriteMoviesList &&
+      {favouriteMoviesList && favouriteMoviesList.length === 0 ? (
+          <EmptyState message='You do not have any saved favourites'/>
+        ) : 
         favouriteMoviesList.map((fav, index) => (
           <List key={index}>
             <ListItem>{fav.Title}</ListItem>

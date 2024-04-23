@@ -14,20 +14,17 @@ import { IMovie } from '../types/movies';
 interface MovieCardProps {
   handleToggleFavourite: (isFav: boolean, id: string) => void;
   handleShowModal: (mov: IMovie) => void;
-  index: number;
   mov: IMovie;
   isFavourite: boolean;
 }
 const MovieCard = ({
   handleToggleFavourite,
   handleShowModal,
-  index,
   mov,
   isFavourite,
 }: MovieCardProps) => {
   return (
     <Card
-      key={index}
       sx={{ m: 2, width: '300px' }}>
       <CardMedia
         component="img"

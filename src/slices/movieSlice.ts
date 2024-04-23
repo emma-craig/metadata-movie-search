@@ -37,6 +37,9 @@ const movieSlice = createSlice({
     removeFavourite(state, action) {
       state.favourites = state.favourites.filter((id) => id !== action.payload);
     },
+    sortMovies(state) {
+      state.data = state.data.sort((a, b) => (a.Title.toString().localeCompare(b.Title.toString())));
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(listMovies.pending, (state) => {
@@ -60,5 +63,5 @@ const movieSlice = createSlice({
 
 export const selectMovies = (state: RootState) => state.data;
 export const selectFavourites = (state: RootState) => state.favourites;
-export const { addFavourite, removeFavourite } = movieSlice.actions;
+export const { addFavourite, removeFavourite, sortMovies } = movieSlice.actions;
 export default movieSlice.reducer;

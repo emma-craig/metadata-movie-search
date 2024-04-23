@@ -1,4 +1,4 @@
-import { Grid, Dialog, Stack, Typography } from '@mui/material';
+import { Grid, Dialog, Stack, Typography, Button } from '@mui/material';
 
 import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
@@ -6,9 +6,11 @@ import {
   addFavourite,
   removeFavourite,
   selectFavourites,
+  sortMovies,
 } from '../slices/movieSlice';
 import { IMovie } from '../types/movies';
 import MovieCard from './MovieCard';
+import EmptyState from './EmptyState';
 
 const MovieList = ({ movies }: { movies: IMovie[] }) => {
   const dispatch = useAppDispatch();
@@ -24,8 +26,17 @@ const MovieList = ({ movies }: { movies: IMovie[] }) => {
     fav ? dispatch(removeFavourite(id)) : dispatch(addFavourite(id));
   };
   const favourites = useAppSelector(selectFavourites);
+  const handleSort = () => {
+    dispatch(sortMovies());
+  };
   return (
     <>
+      <Button
+        onClick={handleSort}
+        style={{ display: movies.length === 0 ? 'none' : undefined }}>
+        Click to sort alphabetically
+      </Button>
+
       <Dialog
         open={isVisible}
         onClose={handleCloseModal}>
@@ -44,7 +55,7 @@ const MovieList = ({ movies }: { movies: IMovie[] }) => {
         container
         spacing={2}>
         {movies && movies.length === 0 ? (
-          <Typography>nothing to show</Typography>
+          <EmptyState message="No series or movies found for this search. Please try again with a new search term" />
         ) : (
           movies.map((mov: IMovie, index: number) => {
             const isFavourite = favourites.includes(mov.imdbID);
@@ -54,7 +65,7 @@ const MovieList = ({ movies }: { movies: IMovie[] }) => {
                 handleShowModal={handleShowModal}
                 mov={mov}
                 isFavourite={isFavourite}
-                index={index}
+                key={index}
               />
             );
           })

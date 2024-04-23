@@ -38,8 +38,7 @@ const Movies = () => {
         <>
           <Dialog
             open={isVisible}
-            onClose={handleCloseModal}
-            >
+            onClose={handleCloseModal}>
             <FavouritesList />
           </Dialog>
           <Stack
@@ -62,13 +61,13 @@ const Movies = () => {
                   value={type}
                   label="Type"
                   sx={{ width: '300px' }}
-                  onChange={handleChange}>
+                  onChange={handleChange}
+                  disabled={movies.length === 0 || filteredMovies.length === 0}>
                   <MenuItem value="movie">Movie</MenuItem>
                   <MenuItem value="series">Series</MenuItem>
                 </Select>
               </FormControl>
               <Typography variant="caption">
-                {' '}
                 {type} count: {filteredMovies.length}
               </Typography>
             </Stack>
