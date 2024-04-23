@@ -1,11 +1,10 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Header from './components/Header';
-import Movie from './components/Movies';
+import Header from './components/Header/Header';
 import React, { useEffect } from 'react';
 import { Stack } from '@mui/material';
 import { useAppDispatch } from './hooks/hooks';
 import { listMovies } from './slices/movieSlice';
-import Movies from './components/Movies';
+import Movies from './components/Movies/Movies';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -13,6 +12,7 @@ const App = () => {
   useEffect(() => {
     dispatch(listMovies('batman'));
   }, [dispatch]);
+
   return (
     <Stack>
       <Router>
@@ -21,10 +21,6 @@ const App = () => {
           <Route
             path="/"
             element={<Movies />}
-          />
-          <Route
-            path="/movie/:movieId"
-            element={<Movie />}
           />
         </Routes>
       </Router>

@@ -9,7 +9,7 @@ import {
 import React from 'react';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { IMovie } from '../types/movies';
+import { IMovie } from '../../types/movies';
 
 interface MovieCardProps {
   handleToggleFavourite: (isFav: boolean, id: string) => void;
@@ -24,8 +24,7 @@ const MovieCard = ({
   isFavourite,
 }: MovieCardProps) => {
   return (
-    <Card
-      sx={{ m: 2, width: '300px' }}>
+    <Card sx={{ m: 2, width: '300px' }}>
       <CardMedia
         component="img"
         alt={`${mov.Title}`}

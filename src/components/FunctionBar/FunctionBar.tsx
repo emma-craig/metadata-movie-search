@@ -9,9 +9,9 @@ import {
   SelectChangeEvent,
 } from '@mui/material';
 import React from 'react';
-import { useAppSelector } from '../hooks/hooks';
-import { selectFavourites } from '../slices/movieSlice';
-import { IMovie } from '../types/movies';
+import { useAppSelector } from '../../hooks/hooks';
+import { selectFavourites } from '../../slices/movieSlice';
+import { IMovie } from '../../types/movies';
 
 interface IFunctionBar {
   handleChange: (e: SelectChangeEvent) => void;
@@ -19,12 +19,12 @@ interface IFunctionBar {
   filteredMovies: IMovie[];
   type: string;
 }
-const FunctionBar=({
+const FunctionBar = ({
   handleChange,
   handleShowModal,
   filteredMovies,
   type,
-}: IFunctionBar)=> {
+}: IFunctionBar) => {
   const favourites = useAppSelector(selectFavourites);
 
   return (
@@ -46,8 +46,7 @@ const FunctionBar=({
             value={type}
             label="Type"
             sx={{ width: '300px' }}
-            onChange={handleChange}
-            >
+            onChange={handleChange}>
             <MenuItem value="movie">Movie</MenuItem>
             <MenuItem value="series">Series</MenuItem>
           </Select>
@@ -58,6 +57,6 @@ const FunctionBar=({
       </Stack>
     </Stack>
   );
-}
+};
 
-export default FunctionBar
+export default FunctionBar;

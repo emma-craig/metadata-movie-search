@@ -1,11 +1,11 @@
 import React, { useMemo, useState } from 'react';
 
-import MovieList from './MovieList';
+import MovieList from '../MovieList/MovieList';
 import { SelectChangeEvent, Dialog } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { selectMovies } from '../slices/movieSlice';
-import FavouritesList from './FavouritesList';
-import FunctionBar from './FunctionBar';
+import { selectMovies } from '../../slices/movieSlice';
+import FavouritesList from '../FavouritesList/FavouritesList';
+import FunctionBar from '../FunctionBar/FunctionBar';
 
 const Movies = () => {
   // const favourites = useSelector(selectFavourites);

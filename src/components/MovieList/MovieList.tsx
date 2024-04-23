@@ -1,16 +1,16 @@
 import { Grid, Dialog, Stack, Typography, Button } from '@mui/material';
 
 import React, { useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import {
   addFavourite,
   removeFavourite,
   selectFavourites,
   sortMovies,
-} from '../slices/movieSlice';
-import { IMovie } from '../types/movies';
-import MovieCard from './MovieCard';
-import EmptyState from './EmptyState';
+} from '../../slices/movieSlice';
+import { IMovie } from '../../types/movies';
+import MovieCard from '../MovieCard/MovieCard';
+import EmptyState from '../EmptyState/EmptyState';
 
 const MovieList = ({ movies }: { movies: IMovie[] }) => {
   const dispatch = useAppDispatch();
@@ -33,7 +33,7 @@ const MovieList = ({ movies }: { movies: IMovie[] }) => {
     <>
       <Button
         onClick={handleSort}
-        style={{ display: movies.length === 0 ? 'none' : undefined }}>
+        style={{ display: movies.length <= 1 ? 'none' : undefined }}>
         Click to sort alphabetically
       </Button>
 
@@ -53,7 +53,8 @@ const MovieList = ({ movies }: { movies: IMovie[] }) => {
       </Dialog>
       <Grid
         container
-        spacing={2}>
+        spacing={2}
+        justifyContent="center">
         {movies && movies.length === 0 ? (
           <EmptyState message="No series or movies found for this search. Please try again with a new search term" />
         ) : (
