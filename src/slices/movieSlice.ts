@@ -40,6 +40,9 @@ const movieSlice = createSlice({
     sortMovies(state) {
       state.data = state.data.sort((a, b) => (a.Title.toString().localeCompare(b.Title.toString())));
     },
+    setLoading: (state, action: PayloadAction<any>) => {
+      state.status = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(listMovies.pending, (state) => {
@@ -48,7 +51,7 @@ const movieSlice = createSlice({
     });
     builder.addCase(
       listMovies.fulfilled,
-      (state, action: PayloadAction<Array<IMovie>>) => {
+      (state, action) => {
         state.data = action.payload || [];
         state.status = 'idle';
       }
@@ -63,5 +66,8 @@ const movieSlice = createSlice({
 
 export const selectMovies = (state: RootState) => state.data;
 export const selectFavourites = (state: RootState) => state.favourites;
+export const selectStatus = (state: RootState) => state.status;
+
+
 export const { addFavourite, removeFavourite, sortMovies } = movieSlice.actions;
 export default movieSlice.reducer;

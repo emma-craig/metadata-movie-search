@@ -6,16 +6,25 @@ import {
   addFavourite,
   removeFavourite,
   selectFavourites,
+  selectStatus,
   sortMovies,
 } from '../../slices/movieSlice';
 import { IMovie } from '../../types/movies';
 import MovieCard from '../MovieCard/MovieCard';
 import EmptyState from '../EmptyState/EmptyState';
+import { Loading } from '../Loading';
 
 const MovieList = ({ movies }: { movies: IMovie[] }) => {
   const dispatch = useAppDispatch();
+  const favourites = useAppSelector(selectFavourites);
+
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [selectedMovie, setSelectedMovie] = useState<IMovie | null>(null);
+  const status = useAppSelector(selectStatus);
+
+  if (status === 'loading') {
+    return <Loading />;
+  }
   const handleShowModal = (mov: IMovie) => {
     setSelectedMovie(mov);
     setIsVisible(true);
@@ -25,7 +34,6 @@ const MovieList = ({ movies }: { movies: IMovie[] }) => {
   const handleToggleFavourite = (fav: boolean, id: string) => {
     fav ? dispatch(removeFavourite(id)) : dispatch(addFavourite(id));
   };
-  const favourites = useAppSelector(selectFavourites);
   const handleSort = () => {
     dispatch(sortMovies());
   };
