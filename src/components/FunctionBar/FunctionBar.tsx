@@ -3,7 +3,6 @@ import {
   Typography,
   Button,
   FormControl,
-  InputLabel,
   Select,
   MenuItem,
   SelectChangeEvent,
@@ -37,27 +36,32 @@ const FunctionBar = ({
       gap={1}
       flexDirection={isSmallScreen ? 'column' : 'row'} // Set flexDirection to column for small screens
       justifyContent='space-around'
+      alignItems='center'
+      borderRadius="5px"
+      padding={2}>
       <Stack>
         <Typography>Number of favourites: {favourites.length}</Typography>
         <Button onClick={handleShowModal}>View Favourites</Button>
       </Stack>
       <Stack alignItems="flex-end">
         <FormControl>
-          <InputLabel id="demo-simple-select-label">Filter by type</InputLabel>
           <Select
             labelId="filter-by-format-label"
             id="format-filter-select"
             value={type}
-            label="Type"
+            label="Filter by Type"
             sx={{ width: '300px' }}
             onChange={handleChange}>
-            <MenuItem value="movie">Movie</MenuItem>
-            <MenuItem value="series">Series</MenuItem>
+            <MenuItem value="all">Show all</MenuItem>
+            <MenuItem value="movie">Show only Movies</MenuItem>
+            <MenuItem value="series">Show only Series</MenuItem>
           </Select>
         </FormControl>
-        <Typography variant="caption">
-          {type} count: {filteredMovies.length}
-        </Typography>
+        {filteredMovies.length > 0 && (
+          <Typography variant="caption">
+            {type} count: {filteredMovies.length}
+          </Typography>
+        )}
       </Stack>
     </Stack>
   );
