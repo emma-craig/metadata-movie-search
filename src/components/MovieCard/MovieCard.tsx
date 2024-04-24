@@ -24,7 +24,7 @@ const MovieCard = ({
   isFavourite,
 }: MovieCardProps) => {
   return (
-    <Card sx={{ m: 2, width: '300px' }}>
+    <Card sx={{ m: 2, width: '300px'}}>
       <CardMedia
         component="img"
         alt={`${mov.Title}`}
@@ -35,7 +35,7 @@ const MovieCard = ({
         }}
       />
       <CardHeader title={mov.Title} />
-      <CardActions>
+      <CardActions  >
         <Tooltip
           title={isFavourite ? 'remove from favourites' : 'add to favourites'}>
           <IconButton

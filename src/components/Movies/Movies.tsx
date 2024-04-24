@@ -1,16 +1,14 @@
 import React, { useMemo, useState } from 'react';
 
 import MovieList from '../MovieList/MovieList';
-import { SelectChangeEvent, Dialog } from '@mui/material';
+import { SelectChangeEvent } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { selectMovies } from '../../slices/movieSlice';
-import FavouritesList from '../FavouritesList/FavouritesList';
 import FunctionBar from '../FunctionBar/FunctionBar';
 
 const Movies = () => {
-  // const favourites = useSelector(selectFavourites);
   const movies = useSelector(selectMovies);
-  const [type, setType] = useState('movie');
+  const [type, setType] = useState('all');
   const handleChange = (e: SelectChangeEvent) => setType(e.target.value);
   let filteredMovies = useMemo(
     () => movies.filter((mov) => mov.Type === type),
@@ -21,15 +19,9 @@ const Movies = () => {
   const handleShowModal = () => {
     setIsVisible(true);
   };
-  const handleCloseModal = () => setIsVisible(false);
-
+  const moviesToShow = filteredMovies.length === 0 ? movies : filteredMovies;
   return (
     <>
-      <Dialog
-        open={isVisible}
-        onClose={handleCloseModal}>
-        <FavouritesList />
-      </Dialog>
       <FunctionBar
         handleChange={handleChange}
         handleShowModal={handleShowModal}
@@ -37,7 +29,7 @@ const Movies = () => {
         filteredMovies={filteredMovies}
       />
 
-      <MovieList movies={filteredMovies} />
+      <MovieList movies={moviesToShow} />
     </>
   );
 };

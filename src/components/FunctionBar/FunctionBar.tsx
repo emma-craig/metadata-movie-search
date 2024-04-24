@@ -1,18 +1,19 @@
 import {
   Stack,
   Typography,
-  Button,
   FormControl,
   Select,
   MenuItem,
   SelectChangeEvent,
   useTheme,
   useMediaQuery,
+  Button,
 } from '@mui/material';
 import React from 'react';
-import { useAppSelector } from '../../hooks/hooks';
-import { selectFavourites } from '../../slices/movieSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { selectFavourites, selectMovies, sortMovies } from '../../slices/movieSlice';
 import { IMovie } from '../../types/movies';
+import { useSelector } from 'react-redux';
 
 interface IFunctionBar {
   handleChange: (e: SelectChangeEvent) => void;
@@ -20,15 +21,22 @@ interface IFunctionBar {
   filteredMovies: IMovie[];
   type: string;
 }
+
 const FunctionBar = ({
   handleChange,
   handleShowModal,
   filteredMovies,
   type,
 }: IFunctionBar) => {
+  const dispatch = useAppDispatch();
+  const movies = useSelector(selectMovies);
+
   const favourites = useAppSelector(selectFavourites);
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm')); // Check if screen size is small
+  const handleSort = () => {
+    dispatch(sortMovies());
+  };
 
   return (
     <Stack
@@ -39,9 +47,12 @@ const FunctionBar = ({
       alignItems='center'
       borderRadius="5px"
       padding={2}>
-      <Stack>
+      <Stack alignItems='center'>
         <Typography>Number of favourites: {favourites.length}</Typography>
-        <Button onClick={handleShowModal}>View Favourites</Button>
+        <Button
+        onClick={handleSort}
+        style={{ display: movies.length <= 1 ? 'none' : undefined }}>
+        Sort titles A-Z</Button>
       </Stack>
       <Stack alignItems="flex-end">
         <FormControl>

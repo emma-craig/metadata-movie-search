@@ -1,4 +1,4 @@
-import { Grid, Dialog, Stack, Typography, Button } from '@mui/material';
+import { Grid, Dialog, Stack, Typography } from '@mui/material';
 
 import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
@@ -7,12 +7,11 @@ import {
   removeFavourite,
   selectFavourites,
   selectStatus,
-  sortMovies,
 } from '../../slices/movieSlice';
 import { IMovie } from '../../types/movies';
 import MovieCard from '../MovieCard/MovieCard';
 import EmptyState from '../EmptyState/EmptyState';
-import { Loading } from '../Loading';
+import { Loading } from '../Loading/Loading';
 
 const MovieList = ({ movies }: { movies: IMovie[] }) => {
   const dispatch = useAppDispatch();
@@ -34,16 +33,11 @@ const MovieList = ({ movies }: { movies: IMovie[] }) => {
   const handleToggleFavourite = (fav: boolean, id: string) => {
     fav ? dispatch(removeFavourite(id)) : dispatch(addFavourite(id));
   };
-  const handleSort = () => {
-    dispatch(sortMovies());
-  };
+
+
   return (
     <>
-      <Button
-        onClick={handleSort}
-        style={{ display: movies.length <= 1 ? 'none' : undefined }}>
-        Click to sort alphabetically
-      </Button>
+  
 
       <Dialog
         open={isVisible}
