@@ -7,6 +7,8 @@ import {
   Select,
   MenuItem,
   SelectChangeEvent,
+  useTheme,
+  useMediaQuery,
 } from '@mui/material';
 import React from 'react';
 import { useAppSelector } from '../../hooks/hooks';
@@ -26,13 +28,15 @@ const FunctionBar = ({
   type,
 }: IFunctionBar) => {
   const favourites = useAppSelector(selectFavourites);
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm')); // Check if screen size is small
 
   return (
     <Stack
       my={4}
       gap={1}
-      flexDirection="row"
-      justifyContent="space-between">
+      flexDirection={isSmallScreen ? 'column' : 'row'} // Set flexDirection to column for small screens
+      justifyContent='space-around'
       <Stack>
         <Typography>Number of favourites: {favourites.length}</Typography>
         <Button onClick={handleShowModal}>View Favourites</Button>
