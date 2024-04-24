@@ -1,4 +1,4 @@
-# Dashboard Layout - Front-End 🦄️
+# Search Movie App - Front-End 🦄️
 This project contain a movie search app with search, filter, sort, toggle favourites funcionalities.
 
 # How to use? 🔮
@@ -8,6 +8,3 @@ cd ../metadata-movie-search
 
 - yarn install
 - yarn start
-
-# To run unit tests
-- yarn test
