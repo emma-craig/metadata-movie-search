@@ -46,7 +46,7 @@ const MovieList = ({ movies }: { movies: IMovie[] }) => {
             flexDirection="row"
             p={2}>
             <Stack
-              width="70vw"
+              alignContent='center'
               p={8}>
               <Typography>Title: {selectedMovie.Title}</Typography>
               <Typography>Year: {selectedMovie.Year}</Typography>
