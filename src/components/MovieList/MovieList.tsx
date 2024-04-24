@@ -1,6 +1,7 @@
+import React, { useState } from 'react';
+
 import { Grid, Stack, Typography } from '@mui/material';
 
-import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import {
   addFavourite,
@@ -9,15 +10,15 @@ import {
   selectStatus,
 } from '../../slices/movieSlice';
 import { IMovie } from '../../types/movies';
+
 import MovieCard from '../MovieCard/MovieCard';
 import EmptyState from '../EmptyState/EmptyState';
-import { Loading } from '../Loading/Loading';
+import Loading from '../Loading/Loading';
 import DialogBox from '../DialogBox/DialogBox';
 
 const MovieList = ({ movies }: { movies: IMovie[] }) => {
   const dispatch = useAppDispatch();
   const favourites = useAppSelector(selectFavourites);
-
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [selectedMovie, setSelectedMovie] = useState<IMovie | null>(null);
   const status = useAppSelector(selectStatus);
@@ -25,10 +26,12 @@ const MovieList = ({ movies }: { movies: IMovie[] }) => {
   if (status === 'loading') {
     return <Loading />;
   }
+
   const handleShowModal = (mov: IMovie) => {
     setSelectedMovie(mov);
     setIsVisible(true);
   };
+
   const handleCloseModal = () => setIsVisible(false);
 
   const handleToggleFavourite = (fav: boolean, id: string) => {
@@ -38,15 +41,16 @@ const MovieList = ({ movies }: { movies: IMovie[] }) => {
   return (
     <>
       <DialogBox
-        isVisible={isVisible}
+        aria-label="component to show additional details of the movie or series"
         handleCloseModal={handleCloseModal}
+        isVisible={isVisible}
         selectedMovie={selectedMovie}>
         {selectedMovie && (
           <Stack
             flexDirection="row"
             p={2}>
             <Stack
-              alignContent='center'
+              alignContent="center"
               p={8}>
               <Typography>Title: {selectedMovie.Title}</Typography>
               <Typography>Year: {selectedMovie.Year}</Typography>
@@ -54,17 +58,17 @@ const MovieList = ({ movies }: { movies: IMovie[] }) => {
               <Typography>Type: {selectedMovie.Type}</Typography>
             </Stack>
             <img
+              alt={selectedMovie.Title}
               src={selectedMovie.Poster}
               width="150px"
-              alt={selectedMovie.Title}
             />
           </Stack>
         )}
       </DialogBox>
       <Grid
         container
-        spacing={2}
-        justifyContent="center">
+        justifyContent="center"
+        spacing={2}>
         {movies && movies.length === 0 ? (
           <EmptyState message="No series or movies found for this search. Please try again with a new search term" />
         ) : (
@@ -74,9 +78,9 @@ const MovieList = ({ movies }: { movies: IMovie[] }) => {
               <MovieCard
                 handleToggleFavourite={handleToggleFavourite}
                 handleShowModal={handleShowModal}
-                mov={mov}
                 isFavourite={isFavourite}
                 key={index}
+                mov={mov}
               />
             );
           })

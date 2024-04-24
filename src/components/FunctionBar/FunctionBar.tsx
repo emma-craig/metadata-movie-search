@@ -1,3 +1,6 @@
+import React from 'react';
+import { useSelector } from 'react-redux';
+
 import {
   Stack,
   Typography,
@@ -9,11 +12,14 @@ import {
   useMediaQuery,
   Button,
 } from '@mui/material';
-import React from 'react';
+
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { selectFavourites, selectMovies, sortMovies } from '../../slices/movieSlice';
+import {
+  selectFavourites,
+  selectMovies,
+  sortMovies,
+} from '../../slices/movieSlice';
 import { IMovie } from '../../types/movies';
-import { useSelector } from 'react-redux';
 
 interface IFunctionBar {
   handleChange: (e: SelectChangeEvent) => void;
@@ -22,54 +28,56 @@ interface IFunctionBar {
   type: string;
 }
 
-const FunctionBar = ({
-  handleChange,
-  handleShowModal,
-  filteredMovies,
-  type,
-}: IFunctionBar) => {
+const FunctionBar = ({ handleChange, filteredMovies, type }: IFunctionBar) => {
   const dispatch = useAppDispatch();
   const movies = useSelector(selectMovies);
-
   const favourites = useAppSelector(selectFavourites);
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm')); // Check if screen size is small
+
   const handleSort = () => {
     dispatch(sortMovies());
   };
 
   return (
     <Stack
-      my={4}
-      gap={1}
-      flexDirection={isSmallScreen ? 'column' : 'row'} // Set flexDirection to column for small screens
-      justifyContent='space-around'
-      alignItems='center'
+      alignItems="center"
       borderRadius="5px"
+      flexDirection={isSmallScreen ? 'column' : 'row'} // Set flexDirection to column for small screens
+      gap={1}
+      justifyContent="space-around"
+      my={4}
       padding={2}>
-      <Stack alignItems='center'>
-        <Typography>Number of favourites: {favourites.length}</Typography>
+      <Stack alignItems="center">
+        <Typography aria-label="count of the favourited movies and series">
+          Number of favourites: {favourites.length}
+        </Typography>
         <Button
-        onClick={handleSort}
-        style={{ display: movies.length <= 1 ? 'none' : undefined }}>
-        Sort titles A-Z</Button>
+          aria-label="button to sort movies and series titles alphabetically"
+          onClick={handleSort}
+          style={{ display: movies.length <= 1 ? 'none' : undefined }}>
+          Sort titles A-Z
+        </Button>
       </Stack>
       <Stack alignItems="flex-end">
         <FormControl>
           <Select
-            labelId="filter-by-format-label"
+            aria-label="selct box for applying filters to search results"
             id="format-filter-select"
-            value={type}
+            labelId="filter-by-format-label"
             label="Filter by Type"
+            onChange={handleChange}
             sx={{ width: '300px' }}
-            onChange={handleChange}>
+            value={type}>
             <MenuItem value="all">Show all</MenuItem>
             <MenuItem value="movie">Show only Movies</MenuItem>
             <MenuItem value="series">Show only Series</MenuItem>
           </Select>
         </FormControl>
         {filteredMovies.length > 0 && (
-          <Typography variant="caption">
+          <Typography
+            aria-label="count of the movies or series in current filter"
+            variant="caption">
             {type} count: {filteredMovies.length}
           </Typography>
         )}

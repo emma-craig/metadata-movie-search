@@ -1,5 +1,7 @@
-import { Dialog } from '@mui/material';
 import React, { ReactNode } from 'react';
+
+import { Dialog } from '@mui/material';
+
 import { IMovie } from '../../types/movies';
 
 interface IDialogBox {

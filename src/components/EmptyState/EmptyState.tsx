@@ -1,11 +1,12 @@
-import { Stack, Typography } from '@mui/material';
 import React from 'react';
+
+import { Stack, Typography } from '@mui/material';
 
 const EmptyState = ({ message }: { message: string }) => {
   return (
     <Stack
-    data-testid ='empty-state-container'
       alignItems="center"
+      aria-label='empty state page when no results are found in the search'
       flex={1}
       justifyContent="center"
       gap={3}

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   Card,
   CardMedia,
@@ -6,28 +8,30 @@ import {
   Tooltip,
   IconButton,
 } from '@mui/material';
-import React from 'react';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+
 import { IMovie } from '../../types/movies';
 
 interface MovieCardProps {
   handleToggleFavourite: (isFav: boolean, id: string) => void;
   handleShowModal: (mov: IMovie) => void;
-  mov: IMovie;
   isFavourite: boolean;
+  mov: IMovie;
 }
+
 const MovieCard = ({
   handleToggleFavourite,
   handleShowModal,
-  mov,
   isFavourite,
+  mov,
 }: MovieCardProps) => {
   return (
-    <Card sx={{ m: 2, width: '300px'}}>
+    <Card sx={{ m: 2, width: '300px' }}>
       <CardMedia
-        component="img"
         alt={`${mov.Title}`}
+        aria-label="poster of the series or movie"
+        component="img"
         height="200px"
         image={mov.Poster}
         onClick={() => {
@@ -35,10 +39,11 @@ const MovieCard = ({
         }}
       />
       <CardHeader title={mov.Title} />
-      <CardActions  >
+      <CardActions>
         <Tooltip
           title={isFavourite ? 'remove from favourites' : 'add to favourites'}>
           <IconButton
+            aria-label="button to add or remove from favourites"
             onClick={() => handleToggleFavourite(isFavourite, mov.imdbID)}>
             {isFavourite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
           </IconButton>
