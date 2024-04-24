@@ -1,4 +1,4 @@
-import { Grid, Dialog, Stack, Typography } from '@mui/material';
+import { Grid, Stack, Typography } from '@mui/material';
 
 import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
@@ -12,6 +12,7 @@ import { IMovie } from '../../types/movies';
 import MovieCard from '../MovieCard/MovieCard';
 import EmptyState from '../EmptyState/EmptyState';
 import { Loading } from '../Loading/Loading';
+import DialogBox from '../DialogBox/DialogBox';
 
 const MovieList = ({ movies }: { movies: IMovie[] }) => {
   const dispatch = useAppDispatch();
@@ -34,25 +35,32 @@ const MovieList = ({ movies }: { movies: IMovie[] }) => {
     fav ? dispatch(removeFavourite(id)) : dispatch(addFavourite(id));
   };
 
-
   return (
     <>
-  
-
-      <Dialog
-        open={isVisible}
-        onClose={handleCloseModal}>
+      <DialogBox
+        isVisible={isVisible}
+        handleCloseModal={handleCloseModal}
+        selectedMovie={selectedMovie}>
         {selectedMovie && (
           <Stack
-            width="70vw"
-            p={8}>
-            <Typography>Title: {selectedMovie.Title}</Typography>
-            <Typography>Year: {selectedMovie.Year}</Typography>
-            <Typography>ID: {selectedMovie.imdbID}</Typography>
-            <Typography>Type: {selectedMovie.Type}</Typography>
+            flexDirection="row"
+            p={2}>
+            <Stack
+              width="70vw"
+              p={8}>
+              <Typography>Title: {selectedMovie.Title}</Typography>
+              <Typography>Year: {selectedMovie.Year}</Typography>
+              <Typography>ID: {selectedMovie.imdbID}</Typography>
+              <Typography>Type: {selectedMovie.Type}</Typography>
+            </Stack>
+            <img
+              src={selectedMovie.Poster}
+              width="150px"
+              alt={selectedMovie.Title}
+            />
           </Stack>
         )}
-      </Dialog>
+      </DialogBox>
       <Grid
         container
         spacing={2}
